@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GPS Speedometer — Real-Time Speed Tracker in km/h &amp; mph | Speed Lab</title>
+  <meta name="description" content="Turn your phone or laptop into a GPS speedometer. Real-time speed in km/h, mph, m/s and ft/s, plus distance, top speed, average speed, heading and GPS accuracy.">
+  <meta name="author" content="Song Tianxiang">
+  <meta name="theme-color" content="#05070d">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://songtianxiang.com/gps-speedometer/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://songtianxiang.com/gps-speedometer/">
+  <meta property="og:site_name" content="Speed Lab — Song Tianxiang">
+  <meta property="og:title" content="GPS Speedometer — Real-time speed in km/h and mph">
+  <meta property="og:description" content="Use your browser's GPS to measure real-world speed, distance and heading. Metric and imperial units, no app install.">
+  <meta property="og:image" content="https://songtianxiang.com/assets/speed/img/og-gps-speedometer.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GPS Speedometer — Real-time speed in km/h and mph">
+  <meta name="twitter:description" content="Use your browser's GPS to measure real-world speed, distance and heading. Metric and imperial units.">
+  <meta name="twitter:image" content="https://songtianxiang.com/assets/speed/img/og-gps-speedometer.jpg">
+
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" href="../icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+
+  <link rel="preload" as="image" href="../assets/speed/img/gps-hero.webp" fetchpriority="high">
+  <link rel="stylesheet" href="../assets/speed/speed.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://songtianxiang.com/gps-speedometer/#app",
+        "name": "GPS Speedometer",
+        "url": "https://songtianxiang.com/gps-speedometer/",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript, a secure (HTTPS) page and location permission.",
+        "description": "A browser-based GPS speedometer that reports real-time speed, distance, top speed, average speed and heading in metric or imperial units.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CAD" },
+        "isAccessibleForFree": true,
+        "author": { "@type": "Person", "name": "Song Tianxiang", "url": "https://songtianxiang.com/" }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://songtianxiang.com/gps-speedometer/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does a GPS speedometer work?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Your device receives position fixes from satellites. The page compares successive positions and timestamps to estimate displacement over time, and also uses the speed value the GPS receiver reports directly. The result is smoothed so the needle does not jump on every noisy fix." }
+          },
+          {
+            "@type": "Question",
+            "name": "How accurate is GPS speed?",
+            "acceptedAnswer": { "@type": "Answer", "text": "GPS speed is usually more accurate than GPS position: consumer receivers often report speed within about 0.5 to 2 km/h when the sky view is clear. Buildings, tunnels, tree cover and a cold start can reduce accuracy or cause gaps." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does the GPS speedometer need mobile data?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Satellite positioning works without a data connection, but the page itself must be loaded once. Some devices use network assistance for a faster first fix, which can improve startup time." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does the speed jump or stay at zero?",
+            "acceptedAnswer": { "@type": "Answer", "text": "A GPS fix has a few metres of uncertainty, so a stationary device can drift. The gauge ignores tiny movements and smooths sudden jumps. If the speed stays at zero, check that location permission is allowed and that you have a clear view of the sky." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I switch between km/h and mph?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. The unit switch changes the gauge, top speed and average speed between kilometres per hour and miles per hour, and changes the secondary speed between metres per second and feet per second. Distance switches between metres/kilometres and feet/miles." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="theme-gps">
+  <a class="skip-link" href="#tracker">Skip to the GPS tracker</a>
+
+  <header class="speed-header">
+    <a class="brand" href="../" aria-label="Speed Lab home">
+      <span class="brand-mark" aria-hidden="true">⚡</span>
+      <span>SPEED LAB<small>BY SONG TIANXIANG</small></span>
+    </a>
+    <nav class="header-nav" aria-label="Speed Lab">
+      <a href="../internet-speed-test/">Internet Speed Test</a>
+      <a href="./" class="is-active" aria-current="page">GPS Speedometer</a>
+      <a href="../">Home</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="hero hero--gps" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Speed Lab · 02 — Reality</p>
+        <h1 id="page-title">GPS<br><span>Speedometer</span></h1>
+        <p class="lede">Your phone becomes a dashboard. Real-world speed from satellite fixes, in kilometres per hour or miles per hour, with distance, top speed, heading and a live compass.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#tracker"><span class="btn-icon" aria-hidden="true">◎</span> Start tracking</a>
+          <a class="btn btn-ghost" href="#how-it-works">How it works</a>
+        </div>
+        <div class="hero-note">
+          <span>Metric &amp; imperial</span>
+          <span>Runs in your browser</span>
+          <span>No app install</span>
+        </div>
+      </div>
+      <div class="hero-dial" aria-hidden="true">
+        <div class="hero-dial-inner">
+          <strong>240<span style="font-size:0.4em"> km/h</span></strong>
+          <span>Gauge range</span>
+          <em>0 – 150 mph</em>
+        </div>
+      </div>
+    </section>
+
+    <section id="tracker" class="panel test-panel" aria-labelledby="tracker-title">
+      <div class="gauge-column">
+        <div class="gauge gauge--gps" data-gauge role="img" aria-label="GPS speed gauge" aria-valuetext="Not tracking">
+          <div class="gauge-arc" aria-hidden="true"></div>
+          <div class="gauge-ticks" aria-hidden="true"></div>
+          <div class="gauge-marker" aria-hidden="true"></div>
+          <div class="gauge-readout">
+            <span class="gauge-value" data-gauge-value>0</span>
+            <span class="gauge-unit" data-gauge-unit>km/h</span>
+            <span class="gauge-sub" data-gauge-sub>Current speed</span>
+          </div>
+          <div class="gauge-scale" aria-hidden="true">
+            <span>0</span>
+            <span data-gauge-max>240</span>
+          </div>
+        </div>
+        <div class="controls">
+          <button class="btn btn-primary" id="start-gps" type="button"><span class="btn-icon" aria-hidden="true">◎</span> Start tracking</button>
+          <button class="btn btn-ghost" id="stop-gps" type="button" disabled>Stop</button>
+          <button class="btn btn-ghost" id="reset-gps" type="button">Reset</button>
+          <div class="unit-switch" role="group" aria-label="Speed unit">
+            <button class="unit-btn" type="button" data-unit="metric" aria-pressed="true">km/h</button>
+            <button class="unit-btn" type="button" data-unit="imperial" aria-pressed="false">mph</button>
+          </div>
+        </div>
+        <p class="control-note">Location is processed on your device — nothing is uploaded. Stop tracking to see the result card for your top speed.</p>
+      </div>
+
+      <div class="readout-panel">
+        <h2 id="tracker-title" class="sr-only">Live GPS speed and trip data</h2>
+        <div class="status-line">
+          <span class="live-badge" id="live-badge">Idle</span>
+          <span id="gps-status">Tap Start tracking and allow location access.</span>
+          <span class="signal-pill" id="signal-pill">No fix</span>
+        </div>
+
+        <div class="gps-tools">
+          <div class="compass" aria-hidden="true">
+            <span class="compass-ring"></span>
+            <span class="compass-needle" id="compass-needle"></span>
+            <strong id="compass-label">N</strong>
+          </div>
+          <div>
+            <span class="metric-label">Heading</span>
+            <span class="metric-value" style="font-size:1.5rem"><span id="heading-deg">—</span><small id="heading-unit">°</small></span>
+            <span class="control-note" id="elapsed">Elapsed 00:00</span>
+          </div>
+        </div>
+
+        <div class="metrics metrics--six">
+          <div class="metric">
+            <span class="metric-label" id="sec-speed-label">Speed</span>
+            <span class="metric-value"><span id="m-ms">—</span><small id="m-ms-unit">m/s</small></span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Distance</span>
+            <span class="metric-value"><span id="m-distance">—</span><small id="m-distance-unit">km</small></span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Top speed</span>
+            <span class="metric-value"><span id="m-max">—</span><small id="m-max-unit">km/h</small></span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Average</span>
+            <span class="metric-value"><span id="m-avg">—</span><small id="m-avg-unit">km/h</small></span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Accuracy</span>
+            <span class="metric-value"><span id="m-accuracy">—</span><small id="m-accuracy-unit">m</small></span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Fixes</span>
+            <span class="metric-value"><span id="m-fixes">0</span><small>GPS</small></span>
+          </div>
+        </div>
+
+        <div class="error-box" id="gps-error" role="alert"></div>
+
+        <div class="result-strip">
+          <div class="rating">
+            <span class="rating-badge" id="rating-icon" aria-hidden="true">📍</span>
+            <span><span id="rating-title">Waiting for a fix</span><small id="rating-text">Speed ranks appear once you start moving.</small></span>
+          </div>
+          <div class="result-actions">
+            <button class="btn btn-ghost" id="view-rank" type="button" disabled>Result card</button>
+            <button class="btn btn-ghost" id="copy-trip" type="button" disabled>Copy trip</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel section" id="how-it-works" aria-labelledby="how-title">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Under the hood</p>
+          <h2 id="how-title">From satellites to a needle</h2>
+        </div>
+        <p>Two independent estimates — receiver-reported speed and displacement over time — are blended and smoothed into one readable number.</p>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>Displacement ÷ time</h3>
+          <span class="big">Haversine</span>
+          <p>Each new fix is compared with the previous one on a great-circle path. Distance divided by the timestamp gap gives a ground-speed estimate.</p>
+        </div>
+        <div class="info-card">
+          <h3>Receiver speed</h3>
+          <span class="big">Doppler</span>
+          <p>Most GPS chips also report speed directly from satellite Doppler shift. It is usually steadier than differencing two positions.</p>
+        </div>
+        <div class="info-card">
+          <h3>Smart smoothing</h3>
+          <span class="big">EMA</span>
+          <p>A short exponential moving average hides fix-to-fix jitter while still letting real acceleration show up within a second or two.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel section" aria-labelledby="tips-title">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Field notes</p>
+          <h2 id="tips-title">Getting a clean reading</h2>
+        </div>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>Clear sky</h3>
+          <p>Keep the device where it can see open sky. Tunnels, parkades and tall buildings can block the fix or make the speed lag.</p>
+        </div>
+        <div class="info-card">
+          <h3>Give it a moment</h3>
+          <p>The first fix after opening the page can take 10–30 seconds. Accuracy usually improves over the next few fixes.</p>
+        </div>
+        <div class="info-card">
+          <h3>Battery</h3>
+          <p>High-accuracy GPS is power-hungry. Stop tracking when you are done, especially on a long trip with the screen on.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel section" aria-labelledby="faq-title">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Questions</p>
+          <h2 id="faq-title">GPS speedometer FAQ</h2>
+        </div>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>How does a GPS speedometer work?</summary>
+          <div class="faq-body"><p>Your device receives position fixes from satellites. The page compares successive positions and timestamps to estimate displacement over time, and also uses the speed value the GPS receiver reports directly. The result is smoothed so the needle does not jump on every noisy fix.</p></div>
+        </details>
+        <details>
+          <summary>How accurate is GPS speed?</summary>
+          <div class="faq-body"><p>GPS speed is usually more accurate than GPS position: consumer receivers often report speed within about 0.5 to 2 km/h when the sky view is clear. Buildings, tunnels, tree cover and a cold start can reduce accuracy or cause gaps.</p></div>
+        </details>
+        <details>
+          <summary>Does the GPS speedometer need mobile data?</summary>
+          <div class="faq-body"><p>No. Satellite positioning works without a data connection, but the page itself must be loaded once. Some devices use network assistance for a faster first fix, which can improve startup time.</p></div>
+        </details>
+        <details>
+          <summary>Why does the speed jump or stay at zero?</summary>
+          <div class="faq-body"><p>A GPS fix has a few metres of uncertainty, so a stationary device can drift. The gauge ignores tiny movements and smooths sudden jumps. If the speed stays at zero, check that location permission is allowed and that you have a clear view of the sky.</p></div>
+        </details>
+        <details>
+          <summary>Can I switch between km/h and mph?</summary>
+          <div class="faq-body"><p>Yes. The unit switch changes the gauge, top speed and average speed between kilometres per hour and miles per hour, and changes the secondary speed between metres per second and feet per second. Distance switches between metres/kilometres and feet/miles.</p></div>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="speed-footer">
+    <div class="wrap">
+      <p>© 2026 Song Tianxiang · Speed Lab. Your coordinates never leave this page.</p>
+      <nav aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../internet-speed-test/">Internet Speed Test</a>
+        <a href="../everydaynews/">Everyday News</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../assets/speed/common.js" defer></script>
+  <script src="gps-speedometer.js" defer></script>
+</body>
+</html>
